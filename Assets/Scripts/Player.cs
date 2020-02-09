@@ -2,15 +2,16 @@
 
 public class Player : MonoBehaviour
 {
-    public GameObject laser;
-
+    [SerializeField] private GameObject laser;
+    [SerializeField] private GameObject trippleShot;
     [SerializeField] private float speed = 3.5f;
     [SerializeField] private float fireRate = 0.5f;
     [SerializeField] private int lives = 3;
 
     private float _canFire = -1f;
     private SpawnManager _spawnManager;
-    
+    [SerializeField] private bool _isTrippleShotActive = false;
+
     private void Start()
     {
         transform.position = new Vector3(0, 0, 0);
@@ -24,7 +25,10 @@ public class Player : MonoBehaviour
     private void Update()
     {
         CalculateMovement();
-        Shoot();
+        if (Input.GetKeyDown(KeyCode.Space) && _canFire < Time.time)
+        {
+            Shoot();
+        }
     }
 
     private void CalculateMovement()
@@ -62,9 +66,16 @@ public class Player : MonoBehaviour
 
     private void Shoot()
     {
-        if (!Input.GetKeyDown(KeyCode.Space) || !(_canFire < Time.time)) return;
         _canFire = Time.time + fireRate;
-        Instantiate(laser, transform.position + new Vector3(0, 1.05f, 0), Quaternion.identity);
+        
+        if (_isTrippleShotActive)
+        {
+            Instantiate(trippleShot, transform.position, Quaternion.identity);
+        }
+        else
+        {
+            Instantiate(laser, transform.position + new Vector3(0, 1.05f, 0), Quaternion.identity);
+        }
     }
 
     public void Damage()
