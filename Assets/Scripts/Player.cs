@@ -64,7 +64,7 @@ public class Player : MonoBehaviour
     {
         if (!Input.GetKeyDown(KeyCode.Space) || !(_canFire < Time.time)) return;
         _canFire = Time.time + fireRate;
-        Instantiate(laser, transform.position + new Vector3(0, 1.5f, 0), Quaternion.identity);
+        Instantiate(laser, transform.position + new Vector3(0, 1.05f, 0), Quaternion.identity);
     }
 
     public void Damage()
