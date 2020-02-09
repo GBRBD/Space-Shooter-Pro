@@ -3,8 +3,9 @@
 public class Player : MonoBehaviour
 {
 
+    public GameObject laser;
+    
     [SerializeField] private float speed = 3.5f;
-    [SerializeField] private GameObject laser;
     [SerializeField] private float fireRate = 0.5f;
     
     private float _canFire = -1f;
