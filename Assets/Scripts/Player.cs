@@ -2,11 +2,11 @@
 
 public class Player : MonoBehaviour
 {
-
     public GameObject laser;
     
     [SerializeField] private float speed = 3.5f;
     [SerializeField] private float fireRate = 0.5f;
+    [SerializeField] private int lives = 3;
     
     private float _canFire = -1f;
 
@@ -59,5 +59,14 @@ public class Player : MonoBehaviour
         if (!Input.GetKeyDown(KeyCode.Space) || !(_canFire < Time.time)) return;
         _canFire = Time.time + fireRate;
         Instantiate(laser, transform.position + new Vector3(0, 0.8f, 0), Quaternion.identity);
+    }
+
+    public void Damage()
+    {
+        this.lives--;
+        if (lives < 1)
+        {
+            Destroy(this.gameObject);
+        }
     }
 }

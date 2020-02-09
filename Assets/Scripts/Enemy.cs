@@ -1,9 +1,11 @@
-﻿using UnityEngine;
+﻿using System.Security.Cryptography;
+using UnityEngine;
 using Random = UnityEngine.Random;
 
 public class Enemy : MonoBehaviour
 {
     [SerializeField] private float speed = 4f;
+
     private void Update()
     {
         transform.Translate(speed * Time.deltaTime * Vector3.down);
@@ -16,6 +18,12 @@ public class Enemy : MonoBehaviour
     {
         if (other.CompareTag("Player"))
         {
+            var player = other.transform.GetComponent<Player>();
+            if (player != null)
+            {
+                player.Damage();
+            }
+
             Destroy(this.gameObject);
         }
 
