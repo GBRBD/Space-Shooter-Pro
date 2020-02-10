@@ -1,30 +1,43 @@
 ﻿using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class SpawnManager : MonoBehaviour
 {
     [SerializeField] private GameObject enemyPrefab;
     [SerializeField] private GameObject enemyContainer;
+    [SerializeField] private GameObject tripleShotPowerUpPrefab;
 
     private bool _stopSpawning = false;
 
     private void Start()
     {
-        StartCoroutine(SpawnRoutine());
+        StartCoroutine(SpawnEnemyRoutine());
+        StartCoroutine(SpawnPowerUpRoutine());
     }
 
-    private IEnumerator SpawnRoutine()
+    private IEnumerator SpawnEnemyRoutine()
     {
         while (_stopSpawning == false)
         {
             var posToSpawn = new Vector3(Random.Range(-8f, 8f), 7, 0);
             var newEnemy = Instantiate(enemyPrefab, posToSpawn, Quaternion.identity);
             newEnemy.transform.parent = enemyContainer.transform;
+            
             yield return new WaitForSeconds(5.0f);
         }
     }
 
+    private IEnumerator SpawnPowerUpRoutine()
+    {
+        while (_stopSpawning == false)
+        {
+            var posToSpawn = new Vector3(Random.Range(-8f, 8f), 7, 0);
+            Instantiate(tripleShotPowerUpPrefab, posToSpawn, Quaternion.identity);
+
+            yield return new WaitForSeconds(Random.Range(3, 9));
+        }
+    }
+    
     public void OnPlayerDeath()
     {
         _stopSpawning = true;
