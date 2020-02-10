@@ -15,6 +15,7 @@
           <e p="Enemy.cs" t="Include" />
           <e p="Laser.cs" t="Include" />
           <e p="Player.cs" t="Include" />
+          <e p="PowerUp.cs" t="Include" />
           <e p="SpawnManager.cs" t="Include" />
         </e>
       </e>

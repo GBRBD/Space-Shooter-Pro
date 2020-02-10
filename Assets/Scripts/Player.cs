@@ -1,16 +1,17 @@
-﻿using UnityEngine;
+﻿using System.Collections;
+using UnityEngine;
 
 public class Player : MonoBehaviour
 {
     [SerializeField] private GameObject laser;
-    [SerializeField] private GameObject trippleShot;
+    [SerializeField] private GameObject tripleShot;
     [SerializeField] private float speed = 3.5f;
     [SerializeField] private float fireRate = 0.5f;
     [SerializeField] private int lives = 3;
+    [SerializeField] private bool _isTripleShotActive = false;
 
     private float _canFire = -1f;
     private SpawnManager _spawnManager;
-    [SerializeField] private bool _isTrippleShotActive = false;
 
     private void Start()
     {
@@ -67,10 +68,10 @@ public class Player : MonoBehaviour
     private void Shoot()
     {
         _canFire = Time.time + fireRate;
-        
-        if (_isTrippleShotActive)
+
+        if (_isTripleShotActive)
         {
-            Instantiate(trippleShot, transform.position, Quaternion.identity);
+            Instantiate(tripleShot, transform.position, Quaternion.identity);
         }
         else
         {
@@ -86,5 +87,17 @@ public class Player : MonoBehaviour
             _spawnManager.OnPlayerDeath();
             Destroy(this.gameObject);
         }
+    }
+
+    public void ActivateTripleShot()
+    {
+        this._isTripleShotActive = true;
+        StartCoroutine(TripleShotPowerRoutine());
+    }
+
+    IEnumerator TripleShotPowerRoutine()
+    {
+        yield return new WaitForSeconds(5.0f);
+        _isTripleShotActive = false;
     }
 }
