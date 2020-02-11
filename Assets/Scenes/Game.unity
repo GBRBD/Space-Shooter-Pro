@@ -186,9 +186,11 @@ MonoBehaviour:
   tripleShot: {fileID: 3395312678545198549, guid: 217d74f439e4c2f419909f5733a94ac7,
     type: 3}
   speed: 5
+  speedMultiplier: 2
   fireRate: 0.15
   lives: 3
-  _isTripleShotActive: 0
+  isTripleShotActive: 0
+  isSpeedBoostActive: 0
 --- !u!212 &652888178
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -567,8 +569,9 @@ MonoBehaviour:
   enemyPrefab: {fileID: 8104946940329214284, guid: 2e9f7463ea1e4c245b6353459194b687,
     type: 3}
   enemyContainer: {fileID: 278614685}
-  tripleShotPowerUpPrefab: {fileID: 8668231076206188100, guid: ee25f4aa63b1dca43a1882ac4e70ae3a,
-    type: 3}
+  powerUps:
+  - {fileID: 8668231076206188100, guid: ee25f4aa63b1dca43a1882ac4e70ae3a, type: 3}
+  - {fileID: 6491126391523484643, guid: 94557b69957bc8644a838a2da54a6c31, type: 3}
 --- !u!4 &1991549185
 Transform:
   m_ObjectHideFlags: 0
