@@ -5,10 +5,15 @@ public class Player : MonoBehaviour
 {
     [SerializeField] private GameObject laser;
     [SerializeField] private GameObject tripleShot;
+    
     [SerializeField] private float speed = 3.5f;
-    [SerializeField] private float fireRate = 0.5f;
+    [SerializeField] private float speedMultiplier = 2f;
+    [SerializeField] private float fireRate = 0.5f; 
+    
     [SerializeField] private int lives = 3;
+    
     [SerializeField] private bool isTripleShotActive = false;
+    [SerializeField] private bool isSpeedBoostActive = false;
 
     private float _canFire = -1f;
     private SpawnManager _spawnManager;
@@ -91,7 +96,7 @@ public class Player : MonoBehaviour
 
     public void ActivateTripleShot()
     {
-        this.isTripleShotActive = true;
+        isTripleShotActive = true;
         StartCoroutine(TripleShotPowerRoutine());
     }
 
@@ -99,5 +104,19 @@ public class Player : MonoBehaviour
     {
         yield return new WaitForSeconds(5.0f);
         isTripleShotActive = false;
+    }
+
+    public void ActivateSpeedBoost()
+    {
+        isSpeedBoostActive = true;
+        speed *= speedMultiplier;
+        StartCoroutine(SpeedBoostRoutine());
+    }
+    
+    IEnumerator SpeedBoostRoutine()
+    {
+        yield return new WaitForSeconds(5.0f);
+        isSpeedBoostActive = false;
+        speed /= speedMultiplier;
     }
 }
