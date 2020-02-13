@@ -5,6 +5,7 @@ public class Player : MonoBehaviour
 {
     [SerializeField] private GameObject laser;
     [SerializeField] private GameObject tripleShot;
+    [SerializeField] private GameObject shield;
     
     [SerializeField] private float speed = 3.5f;
     [SerializeField] private float speedMultiplier = 2f;
@@ -12,8 +13,9 @@ public class Player : MonoBehaviour
     
     [SerializeField] private int lives = 3;
     
-    [SerializeField] private bool isTripleShotActive = false;
-    [SerializeField] private bool isSpeedBoostActive = false;
+    private bool _isTripleShotActive = false;
+    private bool _isSpeedBoostActive = false;
+    private bool _isShieldActive = false;
 
     private float _canFire = -1f;
     private SpawnManager _spawnManager;
@@ -74,7 +76,7 @@ public class Player : MonoBehaviour
     {
         _canFire = Time.time + fireRate;
 
-        if (isTripleShotActive)
+        if (_isTripleShotActive)
         {
             Instantiate(tripleShot, transform.position, Quaternion.identity);
         }
@@ -86,6 +88,13 @@ public class Player : MonoBehaviour
 
     public void Damage()
     {
+        if (_isShieldActive)
+        {
+            _isShieldActive = false;
+            shield.SetActive(false);
+            return;
+        }
+        
         this.lives--;
         if (lives < 1)
         {
@@ -96,19 +105,19 @@ public class Player : MonoBehaviour
 
     public void ActivateTripleShot()
     {
-        isTripleShotActive = true;
+        _isTripleShotActive = true;
         StartCoroutine(TripleShotPowerRoutine());
     }
 
     IEnumerator TripleShotPowerRoutine()
     {
         yield return new WaitForSeconds(5.0f);
-        isTripleShotActive = false;
+        _isTripleShotActive = false;
     }
 
     public void ActivateSpeedBoost()
     {
-        isSpeedBoostActive = true;
+        _isSpeedBoostActive = true;
         speed *= speedMultiplier;
         StartCoroutine(SpeedBoostRoutine());
     }
@@ -116,7 +125,13 @@ public class Player : MonoBehaviour
     IEnumerator SpeedBoostRoutine()
     {
         yield return new WaitForSeconds(5.0f);
-        isSpeedBoostActive = false;
+        _isSpeedBoostActive = false;
         speed /= speedMultiplier;
+    }
+
+    public void ActivateShield()
+    {
+        _isShieldActive = true;
+        shield.SetActive(true);
     }
 }
