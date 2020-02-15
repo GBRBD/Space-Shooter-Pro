@@ -6,6 +6,7 @@ public class Player : MonoBehaviour
     [SerializeField] private GameObject laser = default;
     [SerializeField] private GameObject tripleShot = default;
     [SerializeField] private GameObject shield = default;
+    [SerializeField] private GameObject leftEngineDamage, rightEngineDamage = default;
 
     [SerializeField] private float speed = 3.5f;
     [SerializeField] private float speedMultiplier = 2f;
@@ -105,6 +106,16 @@ public class Player : MonoBehaviour
         }
 
         this.lives--;
+        if (lives == 2)
+        {
+            leftEngineDamage.SetActive(true);
+        }
+        else if (lives == 1)
+        {
+            rightEngineDamage.SetActive(true);
+
+        }
+
         _uiManager.UpdateLives(lives);
         if (lives < 1)
         {
