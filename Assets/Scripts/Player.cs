@@ -6,7 +6,8 @@ public class Player : MonoBehaviour
     [SerializeField] private GameObject laser = default;
     [SerializeField] private GameObject tripleShot = default;
     [SerializeField] private GameObject shield = default;
-    [SerializeField] private GameObject leftEngineDamage, rightEngineDamage = default;
+    [SerializeField] private GameObject leftEngineDamage = default;
+    [SerializeField] private GameObject rightEngineDamage = default;
 
     [SerializeField] private AudioClip laserSoundClip = default;
 
