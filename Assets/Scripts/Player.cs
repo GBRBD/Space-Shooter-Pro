@@ -8,6 +8,8 @@ public class Player : MonoBehaviour
     [SerializeField] private GameObject shield = default;
     [SerializeField] private GameObject leftEngineDamage, rightEngineDamage = default;
 
+    [SerializeField] private AudioClip laserSoundClip = default;
+
     [SerializeField] private float speed = 3.5f;
     [SerializeField] private float speedMultiplier = 2f;
     [SerializeField] private float fireRate = 0.5f;
@@ -23,11 +25,14 @@ public class Player : MonoBehaviour
     private SpawnManager _spawnManager;
     private UIManager _uiManager;
 
+    private AudioSource _audioSource;
+
     private void Start()
     {
         transform.position = new Vector3(0, 0, 0);
         _spawnManager = GameObject.Find("Spawn Manager").GetComponent<SpawnManager>();
         _uiManager = GameObject.Find("Canvas").GetComponent<UIManager>();
+        _audioSource = GetComponent<AudioSource>();
 
         if (_spawnManager == null)
         {
@@ -38,6 +43,13 @@ public class Player : MonoBehaviour
         {
             Debug.LogError("The ui manager is null");
         }
+
+        if (_audioSource == null)
+        {
+            Debug.LogError("Audio source is null");
+        }
+
+        _audioSource.clip = laserSoundClip;
     }
 
     private void Update()
@@ -94,6 +106,8 @@ public class Player : MonoBehaviour
         {
             Instantiate(laser, transform.position + new Vector3(0, 1.05f, 0), Quaternion.identity);
         }
+
+        _audioSource.Play();
     }
 
     public void Damage()
@@ -113,7 +127,6 @@ public class Player : MonoBehaviour
         else if (lives == 1)
         {
             rightEngineDamage.SetActive(true);
-
         }
 
         _uiManager.UpdateLives(lives);
