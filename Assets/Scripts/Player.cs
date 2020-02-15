@@ -3,23 +3,22 @@ using UnityEngine;
 
 public class Player : MonoBehaviour
 {
-    [SerializeField] private GameObject laser;
-    [SerializeField] private GameObject tripleShot;
-    [SerializeField] private GameObject shield;
-    
+    [SerializeField] private GameObject laser = default;
+    [SerializeField] private GameObject tripleShot = default;
+    [SerializeField] private GameObject shield = default;
+
     [SerializeField] private float speed = 3.5f;
     [SerializeField] private float speedMultiplier = 2f;
-    [SerializeField] private float fireRate = 0.5f; 
-    
+    [SerializeField] private float fireRate = 0.5f;
+
     [SerializeField] private int lives = 3;
-    [SerializeField] private int score;
-    
+    [SerializeField] private int score = default;
+
     private bool _isTripleShotActive = false;
-    private bool _isSpeedBoostActive = false;
     private bool _isShieldActive = false;
 
     private float _canFire = -1f;
-    
+
     private SpawnManager _spawnManager;
     private UIManager _uiManager;
 
@@ -28,12 +27,12 @@ public class Player : MonoBehaviour
         transform.position = new Vector3(0, 0, 0);
         _spawnManager = GameObject.Find("Spawn Manager").GetComponent<SpawnManager>();
         _uiManager = GameObject.Find("Canvas").GetComponent<UIManager>();
-        
+
         if (_spawnManager == null)
         {
             Debug.LogError("The spawn manager is null");
         }
-        
+
         if (_uiManager == null)
         {
             Debug.LogError("The ui manager is null");
@@ -104,7 +103,7 @@ public class Player : MonoBehaviour
             shield.SetActive(false);
             return;
         }
-        
+
         this.lives--;
         _uiManager.UpdateLives(lives);
         if (lives < 1)
@@ -128,15 +127,13 @@ public class Player : MonoBehaviour
 
     public void ActivateSpeedBoost()
     {
-        _isSpeedBoostActive = true;
         speed *= speedMultiplier;
         StartCoroutine(SpeedBoostRoutine());
     }
-    
+
     IEnumerator SpeedBoostRoutine()
     {
         yield return new WaitForSeconds(5.0f);
-        _isSpeedBoostActive = false;
         speed /= speedMultiplier;
     }
 

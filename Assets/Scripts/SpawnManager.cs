@@ -3,9 +3,9 @@ using UnityEngine;
 
 public class SpawnManager : MonoBehaviour
 {
-    [SerializeField] private GameObject enemyPrefab;
-    [SerializeField] private GameObject enemyContainer;
-    [SerializeField] private GameObject[] powerUps;
+    [SerializeField] private GameObject enemyPrefab = default;
+    [SerializeField] private GameObject enemyContainer = default;
+    [SerializeField] private GameObject[] powerUps = default;
 
     private bool _stopSpawning = false;
 

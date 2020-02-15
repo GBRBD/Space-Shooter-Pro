@@ -5,12 +5,11 @@ using UnityEngine.UI;
 
 public class UIManager : MonoBehaviour
 {
-
-    [SerializeField] private Text scoreText;
-    [SerializeField] private Text gameOverText;
-    [SerializeField] private Text restartText;
-    [SerializeField] private Sprite[] livesSprites;
-    [SerializeField] private Image livesImg;
+    [SerializeField] private Text scoreText = default;
+    [SerializeField] private Text gameOverText = default;
+    [SerializeField] private Text restartText = default;
+    [SerializeField] private Sprite[] livesSprites = default;
+    [SerializeField] private Image livesImg = default;
 
     private GameManager _gameManager;
 
@@ -30,7 +29,6 @@ public class UIManager : MonoBehaviour
     public void UpdateScore(int playerScore)
     {
         scoreText.text = "Score: " + playerScore;
-
     }
 
     public void UpdateLives(int currentLives)
@@ -54,12 +52,10 @@ public class UIManager : MonoBehaviour
     {
         while (true)
         {
-            gameOverText.text= "GAME OVER";
-            yield return  new WaitForSeconds(.5f);
-            gameOverText.text= "";
-            yield return  new WaitForSeconds(.5f);
-
+            gameOverText.text = "GAME OVER";
+            yield return new WaitForSeconds(.5f);
+            gameOverText.text = "";
+            yield return new WaitForSeconds(.5f);
         }
     }
-  
 }
