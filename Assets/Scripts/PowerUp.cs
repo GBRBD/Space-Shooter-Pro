@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using System.Xml.Serialization;
+using UnityEngine;
 
 public class PowerUp : MonoBehaviour
 {
@@ -6,7 +7,8 @@ public class PowerUp : MonoBehaviour
 
     // 0 triple shot, 1 speed, 2 shield
     [SerializeField] private int powerupId = default;
-
+    [SerializeField] private AudioClip clip = default;
+    
     private void Update()
     {
         transform.Translate(Time.deltaTime * speed * Vector3.down);
@@ -20,6 +22,7 @@ public class PowerUp : MonoBehaviour
     {
         if (other.CompareTag("Player"))
         {
+            AudioSource.PlayClipAtPoint(clip, transform.position);
             Destroy(this.gameObject);
             var player = other.transform.GetComponent<Player>();
             if (player != null)
@@ -39,8 +42,6 @@ public class PowerUp : MonoBehaviour
                         Debug.Log("Default value");
                         break;
                 }
-
-                
             }
         }
     }

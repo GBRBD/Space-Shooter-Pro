@@ -12,7 +12,7 @@ public class Enemy : MonoBehaviour
     {
         _player = GameObject.Find("Player").GetComponent<Player>();
         _audioSource = GetComponent<AudioSource>();
-        _audioSource.volume = .5f;
+        _audioSource.volume = .1f;
         if (_player == null)
         {
             Debug.LogError("Player is null");
@@ -25,6 +25,7 @@ public class Enemy : MonoBehaviour
         }
     }
 
+    
     private void Update()
     {
         transform.Translate(speed * Time.deltaTime * Vector3.down);
@@ -61,6 +62,7 @@ public class Enemy : MonoBehaviour
             _anim.SetTrigger("OnEnemyDeath");
             speed = 0;
             _audioSource.Play();
+            Destroy(GetComponent<Collider2D>());
 
             Destroy(this.gameObject, 2.8f);
         }
