@@ -4,9 +4,13 @@ using Random = UnityEngine.Random;
 public class Enemy : MonoBehaviour
 {
     [SerializeField] private float speed = 4f;
+    [SerializeField] private GameObject laserPrefab = default;
+    
     private Player _player;
     private Animator _anim;
     private AudioSource _audioSource;
+    private float _fireRate = 3.0f;
+    private float _canFire = -1f;
 
     private void Start()
     {
@@ -25,8 +29,24 @@ public class Enemy : MonoBehaviour
         }
     }
 
-    
+
     private void Update()
+    {
+        CalculateMovement();
+        if (_canFire < Time.time)
+        {
+            _fireRate = Random.Range(3f, 7f);
+            _canFire = Time.time + _fireRate + _canFire;
+            GameObject enemyLaser = Instantiate(laserPrefab, transform.position, Quaternion.identity);
+            Laser[] lasers = enemyLaser.GetComponentsInChildren<Laser>();
+            foreach (var laser in lasers)
+            {
+                laser.AssignEnemyLaser();
+            }
+        }
+    }
+
+    void CalculateMovement()
     {
         transform.Translate(speed * Time.deltaTime * Vector3.down);
         if (!(transform.position.y < -5f)) return;
